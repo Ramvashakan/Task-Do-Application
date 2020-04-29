@@ -1,6 +1,6 @@
 import { MainPage } from './../main/main';
 import { Component } from '@angular/core';
-import { NavController,AlertController } from 'ionic-angular';
+import { NavController,AlertController,LoadingController } from 'ionic-angular';
 import { AngularFireAuth } from 'angularfire2/auth';
 
 @Component({
@@ -14,27 +14,37 @@ export class HomePage {
 
   constructor(public navCtrl: NavController,
     public AFAuth: AngularFireAuth,
-    public AlrtCtrl: AlertController
+    public AlrtCtrl: AlertController,
+    public LoadCtrl: LoadingController
     ) {
 
   }
   
-  register(user, pass){
+   register(user, pass){
     
-    this.AFAuth.auth.createUserWithEmailAndPassword(user,pass).then(
+    this.AFAuth.auth.createUserWithEmailAndPassword(user,pass). then(
       (res) =>{
         if(!user.emailVerified){
         this.sendEmailVerification()
 
-        let alert = this.AlrtCtrl.create({
-          title: 'Verify',
-          message: 'The verifiion is send to your mail ',
-          buttons: ['OK']
-         });
-        alert.present(); 
+       
+       let alert = this.AlrtCtrl.create({
+        title: 'Verify',
+        message: 'The verification is send to your mail ',
+        buttons: ['OK']
+       });
+      alert.present(); 
+        
         }
       }).catch(
         err =>{
+
+          let load = this.LoadCtrl.create({
+            content: 'Please Wait',
+            duration: 3000
+          });
+         load.present();
+
         let alert = this.AlrtCtrl.create({
           title: 'Error',
           message: 'The mail is already in use ',
@@ -79,7 +89,12 @@ export class HomePage {
     this.AFAuth.authState.subscribe(user => {
         user.sendEmailVerification()
         .then(() => {
-          console.log('email sent');
+          let load = this.LoadCtrl.create({
+            content: 'Please Wait',
+            duration: 3000
+          });
+         load.present();
+
         })
       });
   }

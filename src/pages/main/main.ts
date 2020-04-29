@@ -8,6 +8,7 @@ import { map } from 'rxjs/operators';
 import { AngularFireDatabase, AngularFireList} from 'angularfire2/database';
 import { Observable } from 'rxjs';
 
+
 @IonicPage()
 @Component({
   selector: 'page-main',
@@ -19,13 +20,14 @@ export class MainPage {
   tasksRef: AngularFireList<any>;
   tasks: Observable<any[]>;
 
-
   constructor(public navCtrl: NavController, public navParams: NavParams,
      public aFA: AngularFireAuth,
      public db:AngularFireDatabase
      ){
+
+     
       
-      this.tasksRef = db.list('/tasks');
+      this.tasksRef = db.list(aFA.auth.currentUser.uid);
 
     this.tasks = this.tasksRef.snapshotChanges().pipe(
       map(changes => 
