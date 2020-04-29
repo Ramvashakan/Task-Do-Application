@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>main</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+  <input placeholder="Enter the task" type="text" [(ngModel)]= "newTask.name">
+
+  <button ion-button (click)= "addTask(newTask)"> Add </button>
+
+  <ion-list no-lines >
+
+    <ion-item *ngFor="let task of tasks | async" >
+
+      
+      <input  type = "text" [(ngModel)]= "task.name">
+
+      <button ion-button item-left (click) = "updateTask(task.key, task.name)">
+        <ion-icon name ="brush"></ion-icon>
+      </button>
+
+      <button ion-button item-left (click) ="removeTask(task.key)">
+        <ion-icon name="remove"></ion-icon>
+      </button>
+
+    </ion-item>
+
+  </ion-list>
+
+
+  
+ 
+  <ion-footer>
+  <button ion-button block (click)="signout()">SignOut</button>
+</ion-footer>
+
+
+
+</ion-content>

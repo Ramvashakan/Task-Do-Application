@@ -1,0 +1,40 @@
+page-main {
+
+    ion-content{
+    background-color: #f50a2d !important;
+    }
+
+    input{
+        margin-top: 12px;
+        padding: 5px;
+        max-width: 220px;
+    }
+
+    ion-button{
+
+       border: thick; 
+       border-radius: 14px !important;
+       border-color: green !important; 
+    }
+
+    ion-list{
+        background-color:#f50a2d !important ;
+        margin-top: 20px !important;
+
+    }
+
+    ion-item{
+        background-color:#f50a2d !important ;
+        margin-top: 20px !important;
+
+    }
+
+    .update{
+
+        margin-top: 30px;
+       
+
+
+    }
+
+}
