@@ -1,6 +1,7 @@
+import { firebase } from './../../app/app.firebase.config';
 import { HomePage } from './../home/home';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams,LoadingController } from 'ionic-angular';
 
 import { AngularFireAuth } from 'angularfire2/auth';
 import { map } from 'rxjs/operators';
@@ -20,27 +21,35 @@ export class MainPage {
   tasksRef: AngularFireList<any>;
   tasks: Observable<any[]>;
 
+  //rootPage: any;
+
   constructor(public navCtrl: NavController, public navParams: NavParams,
      public aFA: AngularFireAuth,
-     public db:AngularFireDatabase
+     public db:AngularFireDatabase,
+     public LoadCtrl:LoadingController
      ){
 
-     
-      
-      this.tasksRef = db.list(aFA.auth.currentUser.uid);
 
-    this.tasks = this.tasksRef.snapshotChanges().pipe(
-      map(changes => 
+       let a = aFA.auth.currentUser.uid;
+       this.tasksRef = db.list(a);
+
+        this.tasks = this.tasksRef.snapshotChanges().pipe(
+        map(changes => 
         changes.map(c => ({ key: c.payload.key, ...c.payload.val() }))
       )
     );
 
      }
 
+      ionViewDidLoad() {
+    console.log('ionViewDidLoad RegisterPage');
+  }
+
   signout(){
-
-   this.navCtrl.setRoot(HomePage);
-
+    
+    this.aFA.auth.signOut().then(auth => {
+      this.navCtrl.setRoot(HomePage);
+    });
   }
 
   updateTask(key, name){  

@@ -12,7 +12,8 @@ import { HomePage } from '../pages/home/home';
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage:any ;
+  rootPage : any ;
+  user: any;
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen,
     public aFA: AngularFireAuth) {
     
@@ -25,13 +26,16 @@ export class MyApp {
 
     this.aFA.authState.subscribe(res =>{
 
-      if(res && res.uid){
+      
+      if(res && res.uid && res.emailVerified){
         this.rootPage = MainPage;
         console.log("logged in");
+        
       }
-      else{
-        console.log("not logged in");
+      else {
+        
         this.rootPage = HomePage;
+        console.log("not logged in");
 
       }
 

@@ -11,6 +11,7 @@ export class HomePage {
 
   user: any;
   pass: any;
+  phone: any;
 
   constructor(public navCtrl: NavController,
     public AFAuth: AngularFireAuth,
@@ -22,26 +23,31 @@ export class HomePage {
   
    register(user, pass){
     
-    this.AFAuth.auth.createUserWithEmailAndPassword(user,pass). then(
+    this.AFAuth.auth.createUserWithEmailAndPassword(user,pass).then(
       (res) =>{
         if(!user.emailVerified){
-        this.sendEmailVerification()
+          this.sendEmailVerification()
+          let load = this.LoadCtrl.create({
+            content: 'Account is been created',
+            duration: 2000
+          });
+         load.present();
 
-       
-       let alert = this.AlrtCtrl.create({
-        title: 'Verify',
-        message: 'The verification is send to your mail ',
-        buttons: ['OK']
-       });
-      alert.present(); 
-        
+          let alert = this.AlrtCtrl.create({
+          title: 'Verify',
+          message: 'The verification is send to your mail ',
+          buttons: ['OK']
+          });
+          alert.present(); 
+        }
+        else{
+
         }
       }).catch(
         err =>{
-
           let load = this.LoadCtrl.create({
             content: 'Please Wait',
-            duration: 3000
+            duration: 2000
           });
          load.present();
 
@@ -58,10 +64,13 @@ export class HomePage {
 
   }
 
+
+
   signIn(user, pass){
   
   this.AFAuth.auth.signInWithEmailAndPassword(user,pass)
    .then( (user) => {
+
     if(user.emailVerified){ 
     this.navCtrl.setRoot(MainPage);
    }
@@ -72,7 +81,6 @@ export class HomePage {
       buttons: ['OK']
   });
   alert.present(); 
-
    }
 
    }).catch(err => { 
@@ -86,17 +94,19 @@ export class HomePage {
   }
 
   sendEmailVerification() {
+    
     this.AFAuth.authState.subscribe(user => {
-        user.sendEmailVerification()
-        .then(() => {
-          let load = this.LoadCtrl.create({
-            content: 'Please Wait',
-            duration: 3000
-          });
-         load.present();
+        user.sendEmailVerification()});
+    
+  }
 
-        })
-      });
+
+
+
+  otp(phone){
+
+    
+
   }
 
 

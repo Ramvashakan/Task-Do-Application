@@ -1,30 +1,36 @@
 page-main {
 
-    ion-content{
-    background-color: #f50a2d !important;
-    }
-
+    
+    
     input{
-        margin-top: 12px;
+        margin-top: 10px;
         padding: 5px;
         max-width: 220px;
+        border: solid red !important;
+        border-radius:7px ;
+        
     }
 
-    ion-button{
+    .add{
+        margin-top: 8px;
+        margin-left: 10px !important;
+        width: 70px;
+        height: 35px;
+        
 
-       border: thick; 
-       border-radius: 14px !important;
-       border-color: green !important; 
-    }
-
-    ion-list{
-        background-color:#f50a2d !important ;
-        margin-top: 20px !important;
 
     }
+
+   ion-icon{
+
+
+        min-width: 8px !important;
+
+    }
+   
 
     ion-item{
-        background-color:#f50a2d !important ;
+        background-color:transparent !important ;
         margin-top: 20px !important;
 
     }
