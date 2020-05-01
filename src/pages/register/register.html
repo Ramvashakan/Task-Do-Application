@@ -3,6 +3,10 @@
 
   <ion-list no-lines>
   <ion-item>
+    <button (click)="back()" class="back" ion-button item-left>
+      <ion-icon name="arrow-back-outline"></ion-icon>
+      <ion-label class="l_back">Back</ion-label>
+    </button>
     <ion-label class ="heading" >
       Register
     </ion-label>
@@ -16,19 +20,10 @@
   </ion-item>
 
   <ion-item>
-    <ion-label  floating >Enter the Phone number</ion-label>
-    <ion-input [(ngModel)] = "phone" maxlength="10" type="phonenumber"  ></ion-input>
-  </ion-item>
-
-  <ion-item>
     <ion-label floating >Password</ion-label>
     <ion-input [(ngModel)] = "pass" type="password" ></ion-input>
   </ion-item>
 
-  
-
- 
-      
     <button class = "reg" (click) = "register(user, pass)" ion-button block >Register</button>
 
 </ion-content>

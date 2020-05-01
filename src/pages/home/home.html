@@ -1,12 +1,7 @@
-<ion-header>
-  <ion-navbar>
-    <ion-title>
-Register    
-</ion-title>
-  </ion-navbar>
-</ion-header>
 
 <ion-content padding>
+
+  <ion-label class= "heading">Log In with Email id or Password</ion-label>
 
   <ion-item>
     <ion-label  floating >Enter the email</ion-label>
@@ -23,12 +18,12 @@ Register
     <ion-input [(ngModel)] = "pass" type="password" ></ion-input>
   </ion-item>
 
-    <button (click) = "register()" ion-button block >Register</button>
+    <button class="but sign" (click) = "register()" ion-button block >Register with Email</button>
 
-    <button class="sign" (click) = "signIn(user, pass,phone)" ion-button block >Sign In</button>
+    <button class="sign" (click) = "signIn(user, pass)" ion-button block >Sign In</button>
 
 
-    <button class="sign" (click) = "signinphn(phone)" ion-button block >Sign In With Phone Number</button>
+    <button class="but sign" (click) = "signinphn(phone)" ion-button block >Sign In With Phone Number</button>
 
 
     <div id="recaptcha-container"></div>

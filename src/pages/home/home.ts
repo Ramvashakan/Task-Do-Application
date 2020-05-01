@@ -1,4 +1,3 @@
-import { RegisterPageModule } from './../register/register.module';
 import { RegisterPage } from './../register/register';
 import { MainPage } from './../main/main';
 import { Component } from '@angular/core';
@@ -28,20 +27,13 @@ export class HomePage {
     ) {
 
   }
-
-
   ionViewDidLoad() {
     
     this.reCaptcha = new firebase.auth.RecaptchaVerifier('recaptcha-container');
   }
 
 
-  
-   
-
   signIn(user, pass, phone){
-
-
   this.AFAuth.auth.signInWithEmailAndPassword(user,pass)
    .then( (user) => {
 
@@ -55,9 +47,8 @@ export class HomePage {
       buttons: ['OK']
   });
   alert.present(); 
-   }
-
-   }).catch(err => { 
+   }}).
+   catch(err => { 
     let alert = this.AlrtCtrl.create({
         title: 'Error in Login',
         message: 'Please check your login credentials Pls try again',
@@ -65,23 +56,24 @@ export class HomePage {
     });
     alert.present(); 
 });
-  }
-
+}
   
-  register(){
-    this.navCtrl.push(RegisterPage);
-  }
-
-
-
 
   signinphn(phone){
-
 
     const appVerifier = this.reCaptcha;
     const phnNumber =  '+91' + phone;
 
-    pH
+    if(phnNumber.length < 10 || phnNumber == null){
+
+      let alert = this.AlrtCtrl.create({
+        title: 'Error',
+        message: 'Enter the valid number',
+        buttons: ['OK']
+        });
+        alert.present(); 
+    }
+
 
     firebase.auth().signInWithPhoneNumber(phnNumber,appVerifier).
     then( confirmationResult =>{
@@ -97,13 +89,9 @@ export class HomePage {
             handler: data => {
               confirmationResult.confirm(data.confirmationCode)
               .then(  auth  => {
-                
                 this.navCtrl.setRoot(MainPage);
                 
-          
               }).catch(function (error) {
-                
-
 
               });
             }
@@ -121,11 +109,12 @@ export class HomePage {
           buttons: ['OK']
           });
           alert.present(); 
-
-
       });
-
   }
 
+
+  register(){
+    this.navCtrl.push(RegisterPage);
+  }
 
 }

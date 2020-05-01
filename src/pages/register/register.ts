@@ -53,6 +53,7 @@ export class RegisterPage {
           buttons: ['OK']
           });
           alert.present(); 
+          
         }
         else{
 
@@ -90,6 +91,10 @@ export class RegisterPage {
     this.AFAuth.authState.subscribe(user => {
         user.sendEmailVerification()});
     
+  }
+
+  back(){
+    this.navCtrl.pop();
   }
 
  
