@@ -27,7 +27,7 @@ export class MyApp {
     this.aFA.authState.subscribe(res =>{
 
       
-      if(res && res.uid && res.emailVerified){
+      if((res && res.uid && res.emailVerified) || (res && res.uid ) ){
         this.rootPage = MainPage;
         console.log("logged in");
         

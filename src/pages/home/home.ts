@@ -1,7 +1,10 @@
+import { RegisterPageModule } from './../register/register.module';
+import { RegisterPage } from './../register/register';
 import { MainPage } from './../main/main';
 import { Component } from '@angular/core';
 import { NavController,AlertController,LoadingController } from 'ionic-angular';
 import { AngularFireAuth } from 'angularfire2/auth';
+import firebase from 'firebase';
 
 @Component({
   selector: 'page-home',
@@ -13,6 +16,11 @@ export class HomePage {
   pass: any;
   phone: any;
 
+
+  reCaptcha: firebase.auth.RecaptchaVerifier;
+  phnNumber: any;
+  appVerifier: any;
+
   constructor(public navCtrl: NavController,
     public AFAuth: AngularFireAuth,
     public AlrtCtrl: AlertController,
@@ -20,54 +28,20 @@ export class HomePage {
     ) {
 
   }
-  
-   register(user, pass){
+
+
+  ionViewDidLoad() {
     
-    this.AFAuth.auth.createUserWithEmailAndPassword(user,pass).then(
-      (res) =>{
-        if(!user.emailVerified){
-          this.sendEmailVerification()
-          let load = this.LoadCtrl.create({
-            content: 'Account is been created',
-            duration: 2000
-          });
-         load.present();
-
-          let alert = this.AlrtCtrl.create({
-          title: 'Verify',
-          message: 'The verification is send to your mail ',
-          buttons: ['OK']
-          });
-          alert.present(); 
-        }
-        else{
-
-        }
-      }).catch(
-        err =>{
-          let load = this.LoadCtrl.create({
-            content: 'Please Wait',
-            duration: 2000
-          });
-         load.present();
-
-        let alert = this.AlrtCtrl.create({
-          title: 'Error',
-          message: 'The mail is already in use ',
-          buttons: ['OK']
-         });
-        alert.present(); 
-        }
-      );
-    this.user = "";
-    this.pass = "";
-
+    this.reCaptcha = new firebase.auth.RecaptchaVerifier('recaptcha-container');
   }
 
 
-
-  signIn(user, pass){
   
+   
+
+  signIn(user, pass, phone){
+
+
   this.AFAuth.auth.signInWithEmailAndPassword(user,pass)
    .then( (user) => {
 
@@ -93,19 +67,63 @@ export class HomePage {
 });
   }
 
-  sendEmailVerification() {
-    
-    this.AFAuth.authState.subscribe(user => {
-        user.sendEmailVerification()});
-    
+  
+  register(){
+    this.navCtrl.push(RegisterPage);
   }
 
 
 
 
-  otp(phone){
+  signinphn(phone){
 
-    
+
+    const appVerifier = this.reCaptcha;
+    const phnNumber =  '+91' + phone;
+
+    pH
+
+    firebase.auth().signInWithPhoneNumber(phnNumber,appVerifier).
+    then( confirmationResult =>{
+
+      let prompt = this.AlrtCtrl.create({
+        title: 'Enter the Confirmation code',
+        inputs: [{ name: 'confirmationCode', placeholder: 'Confirmation Code' }],
+        buttons: [
+          { text: 'Cancel',
+            handler: data => { console.log('Cancel clicked'); }
+          },
+          { text: 'Send',
+            handler: data => {
+              confirmationResult.confirm(data.confirmationCode)
+              .then(  auth  => {
+                
+                this.navCtrl.setRoot(MainPage);
+                
+          
+              }).catch(function (error) {
+                
+
+
+              });
+            }
+          }
+        ]
+      });
+      prompt.present();
+    }).
+    catch(
+      err =>{
+
+        let alert = this.AlrtCtrl.create({
+          title: 'Verify',
+          message: 'The verification sms is not send',
+          buttons: ['OK']
+          });
+          alert.present(); 
+
+
+      });
 
   }
 

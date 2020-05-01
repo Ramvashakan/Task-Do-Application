@@ -23,13 +23,15 @@ Register
     <ion-input [(ngModel)] = "pass" type="password" ></ion-input>
   </ion-item>
 
-    <button (click) = "register(user, pass)" ion-button block >Register</button>
+    <button (click) = "register()" ion-button block >Register</button>
 
-    <button class="sign" (click) = "signIn(user, pass)" ion-button block >Sign In</button>
-
-    <button class="sign" (click) = "otp(phone)" ion-button block >Get otp</button>
+    <button class="sign" (click) = "signIn(user, pass,phone)" ion-button block >Sign In</button>
 
 
+    <button class="sign" (click) = "signinphn(phone)" ion-button block >Sign In With Phone Number</button>
+
+
+    <div id="recaptcha-container"></div>
 
     
 

@@ -1,3 +1,4 @@
+import { RegisterPage } from './../pages/register/register';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { MainPage } from './../pages/main/main';
 import { BrowserModule } from '@angular/platform-browser';
@@ -19,7 +20,7 @@ import { AngularFireDatabaseModule,AngularFireDatabase } from 'angularfire2/data
   declarations: [
     MyApp,
     HomePage,
-    MainPage
+    MainPage,RegisterPage
   ],
   imports: [
     BrowserModule,
@@ -33,7 +34,7 @@ import { AngularFireDatabaseModule,AngularFireDatabase } from 'angularfire2/data
   entryComponents: [
     MyApp,
     HomePage,
-    MainPage,
+    MainPage,RegisterPage
   ],
   providers: [
     StatusBar,
